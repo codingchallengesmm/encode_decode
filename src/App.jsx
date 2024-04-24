@@ -64,6 +64,7 @@ function App() {
   const [output, setOutput] = useState(0)
 
   const [binaryPadding, setBinaryPadding] = useState(false)
+  const [showNumbers, setShowNumbers] = useState(false)
 
   useMemo(() => {
     setOutput(decoders[decoder]?.call(this, decodeStr))
@@ -178,9 +179,13 @@ function App() {
 
       <button onClick={() => setDecodeStr('')}>Clear</button>
 
+      <input id="show_numbers" type="checkbox" checked={showNumbers} onChange={e => setShowNumbers(e.target.checked)} />
+
+      <label htmlFor="show_numbers">show numbers</label>
+
       <br />
 
-      {encodingMap[decoder].split('').map((ch) => <button onClick={(e) => { setDecodeStr(old => old + ch) }}>{ch}</button>)}
+      {encodingMap[decoder].split('').map((ch, i) => <button onClick={(e) => { setDecodeStr(old => old + ch) }}>{ch}{showNumbers && <span> ({i})</span>}</button>)}
 
       <table>
         <tr>
